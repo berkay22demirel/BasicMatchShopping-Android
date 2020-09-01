@@ -19,8 +19,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     List<CategoryResponse> categoryResponses;
     Context context;
+    ClickedItem clickedItem;
 
-    public CategoryAdapter() {
+    public CategoryAdapter(ClickedItem clickedItem) {
+        this.clickedItem = clickedItem;
     }
 
     public void setData(List<CategoryResponse> categoryResponses) {
@@ -42,6 +44,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         CategoryResponse categoryResponse = categoryResponses.get(position);
 
         Picasso.get().load(categoryResponse.getImagePath()).into(holder.imageView);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickedItem.clickedCategory(categoryResponse);
+            }
+        });
 
     }
 
@@ -59,5 +67,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
             imageView = itemView.findViewById(R.id.imageViewCategory);
         }
+    }
+
+    public interface ClickedItem {
+
+        public void clickedCategory(CategoryResponse categoryResponse);
     }
 }

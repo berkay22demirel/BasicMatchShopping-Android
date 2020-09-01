@@ -1,5 +1,6 @@
 package com.example.basicmatchshopping;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CategoryAdapter.ClickedItem {
 
     RecyclerView recyclerView;
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        categoryAdapter = new CategoryAdapter();
+        categoryAdapter = new CategoryAdapter(this::clickedCategory);
 
         Call<List<CategoryResponse>> categoryList = ApiClient.getCategoryService().getAll();
 
@@ -83,5 +84,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void clickedCategory(CategoryResponse categoryResponse) {
+        Intent intent = new Intent(this, ProductsActivity.class);
+        intent.putExtra("categoryId", categoryResponse.getId());
+        startActivity(intent);
     }
 }
