@@ -4,13 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.basicmatchshopping.R;
 import com.example.basicmatchshopping.api.response.CategoryResponse;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void setData(List<CategoryResponse> categoryResponses) {
         this.categoryResponses = categoryResponses;
         notifyDataSetChanged();
+
     }
 
     @NonNull
@@ -39,7 +41,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         CategoryResponse categoryResponse = categoryResponses.get(position);
 
-        holder.textViewCategoryName.setText(categoryResponse.getName());
+        Picasso.get().load(categoryResponse.getImagePath()).into(holder.imageView);
+
     }
 
     @Override
@@ -49,12 +52,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     public class CategoryAdapterVH extends RecyclerView.ViewHolder {
 
-        TextView textViewCategoryName;
+        ImageView imageView;
 
         public CategoryAdapterVH(@NonNull View itemView) {
             super(itemView);
 
-            textViewCategoryName = itemView.findViewById(R.id.textview_categoryname);
+            imageView = itemView.findViewById(R.id.imageViewCategory);
         }
     }
 }
