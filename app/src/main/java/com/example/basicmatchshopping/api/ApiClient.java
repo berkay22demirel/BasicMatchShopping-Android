@@ -1,6 +1,7 @@
 package com.example.basicmatchshopping.api;
 
-import com.example.basicmatchshopping.api.service.CategoryService;
+import com.example.basicmatchshopping.api.service.CategoryApiClient;
+import com.example.basicmatchshopping.api.service.ProductApiClient;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -24,8 +25,13 @@ public class ApiClient {
         return retrofit;
     }
 
-    public static CategoryService getCategoryService() {
-        CategoryService categoryService = getRetrofit().create(CategoryService.class);
-        return categoryService;
+    public static CategoryApiClient getCategoryApiClient() {
+        CategoryApiClient categoryApiClient = getRetrofit().create(CategoryApiClient.class);
+        return categoryApiClient;
+    }
+
+    public static ProductApiClient getProductApiClient() {
+        ProductApiClient productApiClient = getRetrofit().create(ProductApiClient.class);
+        return productApiClient;
     }
 }

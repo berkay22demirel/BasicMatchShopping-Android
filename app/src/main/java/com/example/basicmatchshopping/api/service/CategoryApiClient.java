@@ -7,8 +7,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
-public interface CategoryService {
+public interface CategoryApiClient {
 
-    @GET("category/getAll")
+    @GET("category/getall")
     Call<List<CategoryResponse>> getAll();
 }

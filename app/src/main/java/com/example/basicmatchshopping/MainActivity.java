@@ -36,14 +36,12 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
 
         recyclerView = findViewById(R.id.recyclerViewCategories);
 
-        recyclerView.setItemViewCacheSize(20);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         categoryAdapter = new CategoryAdapter(this::clickedCategory);
 
-        Call<List<CategoryResponse>> categoryList = ApiClient.getCategoryService().getAll();
+        Call<List<CategoryResponse>> categoryList = ApiClient.getCategoryApiClient().getAll();
 
         categoryList.enqueue(new Callback<List<CategoryResponse>>() {
             @Override

@@ -1,6 +1,8 @@
 package com.example.basicmatchshopping.api.response;
 
-public class CategoryResponse {
+import java.io.Serializable;
+
+public class CategoryResponse implements Serializable {
 
     private int id;
     private String name;
