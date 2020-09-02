@@ -2,13 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <item
-        android:id="@+id/menuseach"
-        android:icon="@drawable/ic_search"
-        android:title=""
-        app:showAsAction="always" />
-
     <item
         android:id="@+id/menushoppingcart"
         android:icon="@drawable/ic_shopping_cart"

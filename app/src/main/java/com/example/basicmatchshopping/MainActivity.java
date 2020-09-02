@@ -70,9 +70,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.menuseach:
-                Toast.makeText(this, "Search selected", Toast.LENGTH_LONG).show();
-                break;
             case R.id.menushoppingcart:
                 Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
                 break;
