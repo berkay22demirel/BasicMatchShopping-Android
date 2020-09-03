@@ -1,0 +1,102 @@
+package com.example.basicmatchshopping;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.basicmatchshopping.adapter.ProductAdapter;
+import com.example.basicmatchshopping.api.ApiClient;
+import com.example.basicmatchshopping.api.response.ProductResponse;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class ProductsActivity extends AppCompatActivity implements ProductAdapter.ClickedItem {
+
+    RecyclerView recyclerView;
+
+    ProductAdapter productAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_products);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Products");
+
+        recyclerView = findViewById(R.id.recyclerViewProducts);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        productAdapter = new ProductAdapter(this::clickedProduct);
+
+        int categoryId = getIntent().getIntExtra("categoryId", 0);
+
+        Call<List<ProductResponse>> productList = ApiClient.getProductApiClient().getAllByCategoryId(categoryId + "");
+
+        productList.enqueue(new Callback<List<ProductResponse>>() {
+            @Override
+            public void onResponse(Call<List<ProductResponse>> call, Response<List<ProductResponse>> response) {
+
+                List<ProductResponse> products = response.body();
+
+                productAdapter.setData(products);
+                recyclerView.setAdapter(productAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductResponse>> call, Throwable t) {
+                Log.e("failure", t.getLocalizedMessage());
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_with_search, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.menuseach:
+                Toast.makeText(this, "Search selected", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.menushoppingcart:
+                Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.menuprofile:
+                Toast.makeText(this, "Profile selected", Toast.LENGTH_LONG).show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void clickedProduct(ProductResponse productResponse) {
+        Intent intent = new Intent(this, ProductActivity.class);
+        intent.putExtra("product", productResponse);
+        startActivity(intent);
+    }
+}
