@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.basicmatchshopping.adapter.CategoryAdapter;
 import com.example.basicmatchshopping.api.ApiClient;
 import com.example.basicmatchshopping.api.response.CategoryResponse;
+import com.example.basicmatchshopping.api.response.UserResponse;
 
 import java.util.List;
 
@@ -29,10 +30,15 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
 
     CategoryAdapter categoryAdapter;
 
+    UserResponse user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        user = (UserResponse) intent.getSerializableExtra("user");
 
         recyclerView = findViewById(R.id.recyclerViewCategories);
 
@@ -74,7 +80,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
                 Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
                 break;
             case R.id.menuprofile:
-                Toast.makeText(this, "Profile selected", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
         }
 

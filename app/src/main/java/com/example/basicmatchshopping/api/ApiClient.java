@@ -2,6 +2,7 @@ package com.example.basicmatchshopping.api;
 
 import com.example.basicmatchshopping.api.service.CategoryApiClient;
 import com.example.basicmatchshopping.api.service.ProductApiClient;
+import com.example.basicmatchshopping.api.service.UserApiClient;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -33,5 +34,10 @@ public class ApiClient {
     public static ProductApiClient getProductApiClient() {
         ProductApiClient productApiClient = getRetrofit().create(ProductApiClient.class);
         return productApiClient;
+    }
+
+    public static UserApiClient getUserApiClient() {
+        UserApiClient userApiClient = getRetrofit().create(UserApiClient.class);
+        return userApiClient;
     }
 }
