@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class SubProductResponse implements Serializable {
 
     private int id;
+    private ProductResponse productDTO;
     private String source;
     private double price;
     private String amountType;
@@ -17,6 +18,14 @@ public class SubProductResponse implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public ProductResponse getProductDTO() {
+        return productDTO;
+    }
+
+    public void setProductDTO(ProductResponse productDTO) {
+        this.productDTO = productDTO;
     }
 
     public String getSource() {

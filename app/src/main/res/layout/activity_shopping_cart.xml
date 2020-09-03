@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShoppingCartActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/large_margin"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewShoppingCartSubProducts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_weight="0.2" />
+
+        <TextView
+            android:id="@+id/textViewShoppingCartTotalAmount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_weight="0.8"
+            android:text="Total Amount = "
+            android:textSize="@dimen/large_text_size" />
+
+        <Button
+            android:id="@+id/buttonShoppingCartBuy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_weight="0.8"
+            android:text="Buy" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

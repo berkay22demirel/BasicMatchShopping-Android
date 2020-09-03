@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/large_margin"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/imageViewShoppingCartSubProductSource"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="0.7"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_launcher_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.3"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textViewShoppingCartSubProductName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_weight="0.5"
+            android:text="" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/textViewShoppingCartSubProductTotalAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/small_margin"
+                android:layout_weight="0.5"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textViewShoppingCartSubProductQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/small_margin"
+                android:layout_weight="0.5"
+                android:text="" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

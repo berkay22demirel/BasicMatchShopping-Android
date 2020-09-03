@@ -2,11 +2,20 @@ package com.example.basicmatchshopping.api.request;
 
 public class UserRequest {
 
+    private int id;
     private String username;
     private String password;
     private String name;
     private String surname;
     private String email;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;

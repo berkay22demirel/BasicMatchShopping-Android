@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -74,7 +73,9 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
 
         switch (item.getItemId()) {
             case R.id.menushoppingcart:
-                Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
+                Intent intentShoppingCart = new Intent(this, ShoppingCartActivity.class);
+                intentShoppingCart.putExtra("user", user);
+                startActivity(intentShoppingCart);
                 break;
             case R.id.menuprofile:
                 if (user == null) {
