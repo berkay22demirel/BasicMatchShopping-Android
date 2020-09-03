@@ -3,6 +3,8 @@ package com.example.basicmatchshopping.api;
 import com.example.basicmatchshopping.api.service.CategoryApiClient;
 import com.example.basicmatchshopping.api.service.OrderApiClient;
 import com.example.basicmatchshopping.api.service.ProductApiClient;
+import com.example.basicmatchshopping.api.service.ShoppingCartApiClient;
+import com.example.basicmatchshopping.api.service.ShoppingCartItemApiClient;
 import com.example.basicmatchshopping.api.service.UserApiClient;
 
 import okhttp3.OkHttpClient;
@@ -45,5 +47,15 @@ public class ApiClient {
     public static OrderApiClient getOrderApiClient() {
         OrderApiClient orderApiClient = getRetrofit().create(OrderApiClient.class);
         return orderApiClient;
+    }
+
+    public static ShoppingCartApiClient getShoppingCartApiClient() {
+        ShoppingCartApiClient shoppingCartApiClient = getRetrofit().create(ShoppingCartApiClient.class);
+        return shoppingCartApiClient;
+    }
+
+    public static ShoppingCartItemApiClient getShoppingCartItemApiClient() {
+        ShoppingCartItemApiClient shoppingCartItemApiClient = getRetrofit().create(ShoppingCartItemApiClient.class);
+        return shoppingCartItemApiClient;
     }
 }

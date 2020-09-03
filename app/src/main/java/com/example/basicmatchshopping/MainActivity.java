@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
     public void clickedCategory(CategoryResponse categoryResponse) {
         Intent intent = new Intent(this, ProductsActivity.class);
         intent.putExtra("categoryId", categoryResponse.getId());
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 

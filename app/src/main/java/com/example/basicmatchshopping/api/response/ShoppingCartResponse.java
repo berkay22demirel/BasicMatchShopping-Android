@@ -6,7 +6,7 @@ public class ShoppingCartResponse {
 
     private int id;
     private UserResponse userDTO;
-    private List<ShoppingCartResponse> shoppingCartItemDTOs;
+    private List<ShoppingCartItemResponse> shoppingCartItemDTOs;
     private double totalAmount;
 
     public int getId() {
@@ -25,11 +25,11 @@ public class ShoppingCartResponse {
         this.userDTO = userDTO;
     }
 
-    public List<ShoppingCartResponse> getShoppingCartItemDTOs() {
+    public List<ShoppingCartItemResponse> getShoppingCartItemDTOs() {
         return shoppingCartItemDTOs;
     }
 
-    public void setShoppingCartItemDTOs(List<ShoppingCartResponse> shoppingCartItemDTOs) {
+    public void setShoppingCartItemDTOs(List<ShoppingCartItemResponse> shoppingCartItemDTOs) {
         this.shoppingCartItemDTOs = shoppingCartItemDTOs;
     }
 

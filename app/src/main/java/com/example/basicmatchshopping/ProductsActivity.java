@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.basicmatchshopping.adapter.ProductAdapter;
 import com.example.basicmatchshopping.api.ApiClient;
 import com.example.basicmatchshopping.api.response.ProductResponse;
+import com.example.basicmatchshopping.api.response.UserResponse;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class ProductsActivity extends AppCompatActivity implements ProductAdapte
     RecyclerView recyclerView;
 
     ProductAdapter productAdapter;
+    UserResponse user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +39,15 @@ public class ProductsActivity extends AppCompatActivity implements ProductAdapte
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Products");
 
+        int categoryId = getIntent().getIntExtra("categoryId", 0);
+        user = (UserResponse) getIntent().getSerializableExtra("user");
+
         recyclerView = findViewById(R.id.recyclerViewProducts);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         productAdapter = new ProductAdapter(this::clickedProduct);
-
-        int categoryId = getIntent().getIntExtra("categoryId", 0);
 
         Call<List<ProductResponse>> productList = ApiClient.getProductApiClient().getAllByCategoryId(categoryId + "");
 
@@ -94,6 +97,7 @@ public class ProductsActivity extends AppCompatActivity implements ProductAdapte
     public void clickedProduct(ProductResponse productResponse) {
         Intent intent = new Intent(this, ProductActivity.class);
         intent.putExtra("product", productResponse);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 }

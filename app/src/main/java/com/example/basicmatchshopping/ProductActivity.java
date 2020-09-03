@@ -2,6 +2,7 @@ package com.example.basicmatchshopping;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -15,14 +16,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.basicmatchshopping.adapter.SubProductAdapter;
+import com.example.basicmatchshopping.api.ApiClient;
 import com.example.basicmatchshopping.api.response.ProductResponse;
+import com.example.basicmatchshopping.api.response.ShoppingCartResponse;
+import com.example.basicmatchshopping.api.response.UserResponse;
 import com.squareup.picasso.Picasso;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    ImageView imageView;
-    TextView textView;
+    RecyclerView recyclerViewSubProduct;
+    ImageView imageViewSubProduct;
+    TextView textViewProductName;
 
     SubProductAdapter subProductAdapter;
 
@@ -34,22 +42,39 @@ public class ProductActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        if (intent != null) {
-            ProductResponse productResponse = (ProductResponse) intent.getSerializableExtra("product");
+        ProductResponse productResponse = (ProductResponse) intent.getSerializableExtra("product");
+        UserResponse user = (UserResponse) intent.getSerializableExtra("user");
 
-            recyclerView = findViewById(R.id.recyclerViewActivityProduct);
-            imageView = findViewById(R.id.imageViewActivityProduct);
-            textView = findViewById(R.id.textViewActivityProductName);
+        recyclerViewSubProduct = findViewById(R.id.recyclerViewActivityProduct);
+        imageViewSubProduct = findViewById(R.id.imageViewActivityProduct);
+        textViewProductName = findViewById(R.id.textViewActivityProductName);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        Picasso.get().load(productResponse.getImagePath()).into(imageViewSubProduct);
+        textViewProductName.setText(productResponse.getName());
 
-            subProductAdapter = new SubProductAdapter();
-            subProductAdapter.setData(productResponse.getSubProductDTOs());
-            recyclerView.setAdapter(subProductAdapter);
+        if (user != null) {
+            Call<ShoppingCartResponse> shoppingCartCall = ApiClient.getShoppingCartApiClient().getActiveShoppingCartByUserId(user.getId() + "", user.getToken());
 
-            Picasso.get().load(productResponse.getImagePath()).into(imageView);
-            textView.setText(productResponse.getName());
+            shoppingCartCall.enqueue(new Callback<ShoppingCartResponse>() {
+                @Override
+                public void onResponse(Call<ShoppingCartResponse> call, Response<ShoppingCartResponse> response) {
+
+                    if (response.isSuccessful()) {
+                        ShoppingCartResponse shoppingCartResponse = response.body();
+                        fillSubProducts(productResponse, user, shoppingCartResponse);
+                    } else {
+                        Toast.makeText(ProductActivity.this, "Sayfa yüklenirken beklenmedik bir hata oluştu! Lütfen tekrar deneyin.", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ShoppingCartResponse> call, Throwable t) {
+                    Log.e("failure", t.getLocalizedMessage());
+                    Toast.makeText(ProductActivity.this, "Sayfa yüklenirken beklenmedik bir hata oluştu! Lütfen tekrar deneyin.", Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            fillSubProducts(productResponse, user, null);
         }
     }
 
@@ -72,6 +97,15 @@ public class ProductActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void fillSubProducts(ProductResponse productResponse, UserResponse user, ShoppingCartResponse shoppingCartResponse) {
+        recyclerViewSubProduct.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewSubProduct.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        subProductAdapter = new SubProductAdapter();
+        subProductAdapter.setData(productResponse.getSubProductDTOs(), user, shoppingCartResponse);
+        recyclerViewSubProduct.setAdapter(subProductAdapter);
     }
 
 }
