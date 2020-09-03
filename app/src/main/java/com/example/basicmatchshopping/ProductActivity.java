@@ -34,6 +34,8 @@ public class ProductActivity extends AppCompatActivity {
 
     SubProductAdapter subProductAdapter;
 
+    UserResponse user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +45,7 @@ public class ProductActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         ProductResponse productResponse = (ProductResponse) intent.getSerializableExtra("product");
-        UserResponse user = (UserResponse) intent.getSerializableExtra("user");
+        user = (UserResponse) intent.getSerializableExtra("user");
 
         recyclerViewSubProduct = findViewById(R.id.recyclerViewActivityProduct);
         imageViewSubProduct = findViewById(R.id.imageViewActivityProduct);
@@ -92,7 +94,14 @@ public class ProductActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.menushoppingcart:
-                Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
+                if (user == null) {
+                    Intent intentLogin = new Intent(this, LoginActivity.class);
+                    startActivityForResult(intentLogin, 1);
+                } else {
+                    Intent intentShoppingCart = new Intent(this, ShoppingCartActivity.class);
+                    intentShoppingCart.putExtra("user", user);
+                    startActivity(intentShoppingCart);
+                }
                 break;
         }
 

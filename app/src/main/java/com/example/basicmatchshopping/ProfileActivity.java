@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -107,7 +106,14 @@ public class ProfileActivity extends AppCompatActivity implements OrderAdapter.C
                 ProfileActivity.this.finish();
                 break;
             case R.id.menushoppingcart:
-                Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
+                if (user == null) {
+                    Intent intentLogin = new Intent(this, LoginActivity.class);
+                    startActivityForResult(intentLogin, 1);
+                } else {
+                    Intent intentShoppingCart = new Intent(this, ShoppingCartActivity.class);
+                    intentShoppingCart.putExtra("user", user);
+                    startActivity(intentShoppingCart);
+                }
                 break;
         }
 

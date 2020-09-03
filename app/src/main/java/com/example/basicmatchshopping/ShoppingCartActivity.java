@@ -142,7 +142,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_others, menu);
+        getMenuInflater().inflate(R.menu.menu_empty, menu);
         return true;
     }
 
@@ -152,9 +152,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                break;
-            case R.id.menushoppingcart:
-                Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
                 break;
         }
 

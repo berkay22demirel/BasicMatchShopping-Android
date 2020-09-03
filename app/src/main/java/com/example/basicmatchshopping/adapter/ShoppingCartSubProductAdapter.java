@@ -39,8 +39,14 @@ public class ShoppingCartSubProductAdapter extends RecyclerView.Adapter<Shopping
         ShoppingCartItemResponse shoppingCartItemResponse = shoppingCartResponse.getShoppingCartItemDTOs().get(position);
 
         Picasso.get().load(shoppingCartItemResponse.getSubProductDTO().getProductDTO().getImagePath()).into(holder.imageView);
+
+        String totalAmount = (shoppingCartItemResponse.getSubProductDTO().getPrice() * shoppingCartItemResponse.getQuantity()) + "";
+        if (totalAmount.length() > 4) {
+            totalAmount = totalAmount.substring(0, 5);
+        }
+
         holder.textViewName.setText(shoppingCartItemResponse.getSubProductDTO().getSource() + " - " + shoppingCartItemResponse.getSubProductDTO().getProductDTO().getName());
-        holder.textViewTotalAmount.setText((shoppingCartItemResponse.getSubProductDTO().getPrice() * shoppingCartItemResponse.getQuantity()) + "£");
+        holder.textViewTotalAmount.setText(totalAmount + "£");
         holder.textViewQuantity.setText(shoppingCartItemResponse.getQuantity() + "");
 
     }

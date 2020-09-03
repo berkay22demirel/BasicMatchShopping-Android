@@ -73,9 +73,14 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
 
         switch (item.getItemId()) {
             case R.id.menushoppingcart:
-                Intent intentShoppingCart = new Intent(this, ShoppingCartActivity.class);
-                intentShoppingCart.putExtra("user", user);
-                startActivity(intentShoppingCart);
+                if (user == null) {
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivityForResult(intent, 1);
+                } else {
+                    Intent intentShoppingCart = new Intent(this, ShoppingCartActivity.class);
+                    intentShoppingCart.putExtra("user", user);
+                    startActivity(intentShoppingCart);
+                }
                 break;
             case R.id.menuprofile:
                 if (user == null) {

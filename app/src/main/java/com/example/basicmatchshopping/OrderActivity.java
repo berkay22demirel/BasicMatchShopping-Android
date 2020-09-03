@@ -76,7 +76,14 @@ public class OrderActivity extends AppCompatActivity {
                 OrderActivity.this.finish();
                 break;
             case R.id.menushoppingcart:
-                Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
+                if (user == null) {
+                    Intent intentLogin = new Intent(this, LoginActivity.class);
+                    startActivityForResult(intentLogin, 1);
+                } else {
+                    Intent intentShoppingCart = new Intent(this, ShoppingCartActivity.class);
+                    intentShoppingCart.putExtra("user", user);
+                    startActivity(intentShoppingCart);
+                }
                 break;
         }
 
