@@ -1,8 +1,9 @@
 package com.example.basicmatchshopping.api.response;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ShoppingCartResponse {
+public class ShoppingCartResponse implements Serializable {
 
     private int id;
     private UserResponse userDTO;
@@ -39,6 +40,14 @@ public class ShoppingCartResponse {
 
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getFixTotalAmount() {
+        String totalAmount = "" + this.totalAmount;
+        if (totalAmount.length() > 4) {
+            totalAmount = totalAmount.substring(0, 5);
+        }
+        return totalAmount;
     }
 
     @Override

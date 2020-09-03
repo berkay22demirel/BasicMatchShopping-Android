@@ -18,5 +18,5 @@ public interface OrderApiClient {
     Call<OrderResponse> buy(@Body OrderRequest orderRequest, @Header("Authorization") String authorization);
 
     @GET("order/getallbyuserid/{id}")
-    Call<List<OrderResponse>> getAllByUserId(@Path("id") String id);
+    Call<List<OrderResponse>> getAllByUserId(@Path("id") String id, @Header("Authorization") String authorization);
 }

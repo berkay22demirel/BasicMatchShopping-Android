@@ -73,12 +73,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         shoppingCartSubProductAdapter.setData(shoppingCartResponse);
                         recyclerViewSubProducts.setAdapter(shoppingCartSubProductAdapter);
 
-                        String totalAmount = "" + shoppingCartResponse.getTotalAmount();
-                        if (totalAmount.length() > 4) {
-                            totalAmount = totalAmount.substring(0, 5);
-                        }
-
-                        textViewTotalAmount.setText(textViewTotalAmount.getText().toString() + totalAmount + "£");
+                        textViewTotalAmount.setText(textViewTotalAmount.getText().toString() + shoppingCartResponse.getFixTotalAmount() + "£");
 
                         buttonBuy.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -157,6 +152,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                break;
+            case R.id.menushoppingcart:
+                Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
                 break;
         }
 

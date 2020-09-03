@@ -3,18 +3,21 @@
     android:id="@+id/linearLayoutOrderItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/large_margin"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/textViewOrderItemDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text=""
+        android:textSize="@dimen/middle_text_size" />
 
     <TextView
         android:id="@+id/textViewOrderItemTotalAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text=""
+        android:textSize="@dimen/middle_text_size" />
 
 </LinearLayout>

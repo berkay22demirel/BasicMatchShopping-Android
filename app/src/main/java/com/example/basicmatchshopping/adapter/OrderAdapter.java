@@ -43,8 +43,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderAdapter
 
         OrderResponse orderResponse = orderResponses.get(position);
 
-        holder.textViewDate.setText(orderResponse.getOrderDate());
-        holder.textViewTotalAmount.setText(orderResponse.getShoppingCartDTO().getTotalAmount() + "£");
+        holder.textViewDate.setText(orderResponse.getOrderDate().substring(0, 11));
+        holder.textViewTotalAmount.setText(orderResponse.getShoppingCartDTO().getFixTotalAmount() + "£");
 
         holder.linearLayoutOrderItem.setOnClickListener(new View.OnClickListener() {
             @Override

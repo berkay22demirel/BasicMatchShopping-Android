@@ -1,6 +1,8 @@
 package com.example.basicmatchshopping.api.response;
 
-public class ShoppingCartItemResponse {
+import java.io.Serializable;
+
+public class ShoppingCartItemResponse implements Serializable {
 
     private int id;
     private SubProductResponse subProductDTO;

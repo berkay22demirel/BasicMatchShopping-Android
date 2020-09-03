@@ -35,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity implements OrderAdapter.C
 
     OrderAdapter orderAdapter;
 
-    UserResponse userResponse;
+    UserResponse user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +49,14 @@ public class ProfileActivity extends AppCompatActivity implements OrderAdapter.C
         textViewNameSurname = findViewById(R.id.textViewProfileNameSurname);
         buttonSignOut = findViewById(R.id.buttonSignOut);
 
-        userResponse = (UserResponse) getIntent().getSerializableExtra("user");
+        user = (UserResponse) getIntent().getSerializableExtra("user");
 
         recyclerViewOrders.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewOrders.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         orderAdapter = new OrderAdapter(this::clickedOrder);
 
-        Call<List<OrderResponse>> orderList = ApiClient.getOrderApiClient().getAllByUserId(userResponse.getId() + "");
+        Call<List<OrderResponse>> orderList = ApiClient.getOrderApiClient().getAllByUserId(user.getId() + "", user.getToken());
 
         orderList.enqueue(new Callback<List<OrderResponse>>() {
             @Override
@@ -76,14 +76,14 @@ public class ProfileActivity extends AppCompatActivity implements OrderAdapter.C
             }
         });
 
-        textViewNameSurname.setText(userResponse.getName() + " " + userResponse.getSurname());
+        textViewNameSurname.setText(user.getName() + " " + user.getSurname());
 
         buttonSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                userResponse = null;
-                intent.putExtra("user", userResponse);
+                user = null;
+                intent.putExtra("user", user);
                 setResult(RESULT_OK, intent);
                 ProfileActivity.this.finish();
             }
@@ -102,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity implements OrderAdapter.C
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent();
-                intent.putExtra("user", userResponse);
+                intent.putExtra("user", user);
                 setResult(RESULT_OK, intent);
                 ProfileActivity.this.finish();
                 break;
@@ -116,6 +116,9 @@ public class ProfileActivity extends AppCompatActivity implements OrderAdapter.C
 
     @Override
     public void clickedOrder(OrderResponse orderResponse) {
-
+        Intent intent = new Intent(this, OrderActivity.class);
+        intent.putExtra("user", user);
+        intent.putExtra("order", orderResponse);
+        startActivityForResult(intent, 1);
     }
 }
