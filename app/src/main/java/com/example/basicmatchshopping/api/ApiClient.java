@@ -1,6 +1,7 @@
 package com.example.basicmatchshopping.api;
 
 import com.example.basicmatchshopping.api.service.CategoryApiClient;
+import com.example.basicmatchshopping.api.service.OrderApiClient;
 import com.example.basicmatchshopping.api.service.ProductApiClient;
 import com.example.basicmatchshopping.api.service.UserApiClient;
 
@@ -39,5 +40,10 @@ public class ApiClient {
     public static UserApiClient getUserApiClient() {
         UserApiClient userApiClient = getRetrofit().create(UserApiClient.class);
         return userApiClient;
+    }
+
+    public static OrderApiClient getOrderApiClient() {
+        OrderApiClient orderApiClient = getRetrofit().create(OrderApiClient.class);
+        return orderApiClient;
     }
 }

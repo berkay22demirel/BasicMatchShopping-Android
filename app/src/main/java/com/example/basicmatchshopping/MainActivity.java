@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-        user = (UserResponse) intent.getSerializableExtra("user");
-
         recyclerView = findViewById(R.id.recyclerViewCategories);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -80,8 +77,14 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
                 Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
                 break;
             case R.id.menuprofile:
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
+                if (user == null) {
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivityForResult(intent, 1);
+                } else {
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    intent.putExtra("user", user);
+                    startActivityForResult(intent, 1);
+                }
                 break;
         }
 
@@ -93,5 +96,15 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
         Intent intent = new Intent(this, ProductsActivity.class);
         intent.putExtra("categoryId", categoryResponse.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                user = (UserResponse) data.getSerializableExtra("user");
+            }
+        }
     }
 }

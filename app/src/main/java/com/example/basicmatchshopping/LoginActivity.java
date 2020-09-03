@@ -34,6 +34,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Login");
+
         editTextUsername = findViewById(R.id.editTextSignInUsername);
         editTextPassword = findViewById(R.id.editTextSignInPassword);
         buttonSignIn = findViewById(R.id.buttonSignIn);
@@ -55,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 login(username, password);
-
             }
         });
 
@@ -63,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_others, menu);
         return true;
     }
 
@@ -71,12 +73,11 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
             case R.id.menushoppingcart:
                 Toast.makeText(this, "Shopping Cart selected", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.menuprofile:
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
                 break;
         }
 
@@ -94,39 +95,45 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
 
-                TokenResponse tokenResponse = response.body();
-                existingUser.setToken("mytoken " + tokenResponse.getToken());
+                if (response.isSuccessful()) {
+                    TokenResponse tokenResponse = response.body();
+                    existingUser.setToken("mytoken " + tokenResponse.getToken());
 
-                Call<UserResponse> userResponse = ApiClient.getUserApiClient().get(username, existingUser.getToken());
+                    Call<UserResponse> userResponse = ApiClient.getUserApiClient().get(username, existingUser.getToken());
 
-                userResponse.enqueue(new Callback<UserResponse>() {
-                    @Override
-                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                    userResponse.enqueue(new Callback<UserResponse>() {
+                        @Override
+                        public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
 
-                        UserResponse body = response.body();
-                        existingUser.setId(body.getId());
-                        existingUser.setUsername(body.getUsername());
-                        existingUser.setName(body.getName());
-                        existingUser.setSurname(body.getSurname());
-                        existingUser.setEmail(body.getEmail());
+                            if (response.isSuccessful()) {
+                                UserResponse body = response.body();
+                                existingUser.setId(body.getId());
+                                existingUser.setUsername(body.getUsername());
+                                existingUser.setName(body.getName());
+                                existingUser.setSurname(body.getSurname());
+                                existingUser.setEmail(body.getEmail());
 
-                        if (existingUser.getId() == 0) {
-                            Toast.makeText(LoginActivity.this, "Giriş başarısız!", Toast.LENGTH_LONG).show();
-                        } else {
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("user", existingUser);
-                            startActivity(intent);
-                            LoginActivity.this.finish();
+                                if (existingUser.getId() != 0) {
+                                    Intent intent = new Intent();
+                                    intent.putExtra("user", existingUser);
+                                    setResult(RESULT_OK, intent);
+                                    LoginActivity.this.finish();
+                                }
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Giriş başarısız!", Toast.LENGTH_LONG).show();
+                            }
+
                         }
 
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserResponse> call, Throwable t) {
-                        Log.e("failure", t.getLocalizedMessage());
-                        Toast.makeText(LoginActivity.this, "Giriş başarısız!", Toast.LENGTH_LONG).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<UserResponse> call, Throwable t) {
+                            Log.e("failure", t.getLocalizedMessage());
+                            Toast.makeText(LoginActivity.this, "Giriş başarısız!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(LoginActivity.this, "Giriş başarısız!", Toast.LENGTH_LONG).show();
+                }
 
             }
 

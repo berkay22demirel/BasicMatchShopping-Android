@@ -15,10 +15,4 @@
         android:title=""
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/menuprofile"
-        android:icon="@drawable/ic_account_circle"
-        android:title=""
-        app:showAsAction="always" />
-
 </menu>
