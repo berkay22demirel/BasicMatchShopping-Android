@@ -1,6 +1,7 @@
 package com.example.basicmatchshopping.api.service;
 
 import com.example.basicmatchshopping.api.request.LoginRequest;
+import com.example.basicmatchshopping.api.request.UserRequest;
 import com.example.basicmatchshopping.api.response.TokenResponse;
 import com.example.basicmatchshopping.api.response.UserResponse;
 
@@ -18,4 +19,7 @@ public interface UserApiClient {
 
     @GET("user/get/{username}")
     Call<UserResponse> get(@Path("username") String username, @Header("Authorization") String authorization);
+
+    @POST("user/create")
+    Call<UserResponse> create(@Body UserRequest userRequest);
 }
