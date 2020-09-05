@@ -11,38 +11,81 @@
         android:layout_margin="@dimen/large_margin"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textViewOrderDate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/small_margin"
-                android:layout_weight="0.5"
-                android:text=""
-                android:textSize="@dimen/large_text_size" />
-
-            <TextView
-                android:id="@+id/textViewOrderTotalAmount"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/small_margin"
-                android:layout_weight="0.5"
-                android:text=""
-                android:textSize="@dimen/large_text_size" />
-
-        </LinearLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewOrderProducts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/small_margin"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.3" />
+
+        <TextView
+            android:id="@+id/textViewOrderDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_weight="0.8"
+            android:text=""
+            android:textSize="@dimen/large_text_size" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutOrderAmazonTotalAmount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_weight="0.8"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageViewOrderAmazonTotalAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/textViewOrderAmazonTotalAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="Total Amount = "
+                android:textSize="@dimen/middle_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutOrderMorrisonsTotalAmount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_weight="0.8"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageViewOrderMorrisonsTotalAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/textViewOrderMorrisonsTotalAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="Total Amount = "
+                android:textSize="@dimen/middle_text_size" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewOrderTotalAmount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:text="Total Amount = "
+            android:textSize="@dimen/middle_text_size" />
 
     </LinearLayout>
 

@@ -46,6 +46,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     LinearLayout linearLayoutMorrisons;
     ImageView imageViewMorrisons;
     TextView textViewMorrisons;
+    TextView textViewTotalAmount;
     Button buttonBuy;
 
     ShoppingCartSubProductAdapter shoppingCartSubProductAdapter;
@@ -80,6 +81,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         imageViewMorrisons = findViewById(R.id.imageViewShoppingCartMorrisonsTotalAmount);
                         textViewMorrisons = findViewById(R.id.textViewShoppingCartMorrisonsTotalAmount);
                         buttonBuy = findViewById(R.id.buttonShoppingCartBuy);
+                        textViewTotalAmount = findViewById(R.id.textViewShoppingCartTotalAmount);
 
                         recyclerViewSubProducts.setLayoutManager(new LinearLayoutManager(ShoppingCartActivity.this));
                         recyclerViewSubProducts.addItemDecoration(new DividerItemDecoration(ShoppingCartActivity.this, DividerItemDecoration.VERTICAL));
@@ -114,6 +116,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         } else {
                             linearLayoutMorrisons.setVisibility(View.INVISIBLE);
                         }
+
+                        textViewTotalAmount.setText(textViewTotalAmount.getText().toString() + df.format(shoppingCartResponse.getTotalAmount()) + "£");
 
 
                         buttonBuy.setOnClickListener(new View.OnClickListener() {

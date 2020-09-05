@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/small_margin"
-            android:layout_weight="0.2" />
+            android:layout_weight="0.3" />
 
         <LinearLayout
             android:id="@+id/linearLayoutShoppingCartAmazonTotalAmount"
@@ -69,6 +69,14 @@
                 android:text="Total Amount = "
                 android:textSize="@dimen/middle_text_size" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewShoppingCartTotalAmount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:text="Total Amount = "
+            android:textSize="@dimen/middle_text_size" />
 
         <Button
             android:id="@+id/buttonShoppingCartBuy"
