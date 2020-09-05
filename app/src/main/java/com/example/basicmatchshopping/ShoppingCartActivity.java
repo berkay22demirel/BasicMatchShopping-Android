@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +23,13 @@ import com.example.basicmatchshopping.api.request.OrderRequest;
 import com.example.basicmatchshopping.api.request.ShoppingCartRequest;
 import com.example.basicmatchshopping.api.request.UserRequest;
 import com.example.basicmatchshopping.api.response.OrderResponse;
+import com.example.basicmatchshopping.api.response.ShoppingCartItemResponse;
 import com.example.basicmatchshopping.api.response.ShoppingCartResponse;
 import com.example.basicmatchshopping.api.response.UserResponse;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,7 +40,12 @@ import retrofit2.Response;
 public class ShoppingCartActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewSubProducts;
-    TextView textViewTotalAmount;
+    LinearLayout linearLayoutAmazon;
+    ImageView imageViewAmazon;
+    TextView textViewAmazon;
+    LinearLayout linearLayoutMorrisons;
+    ImageView imageViewMorrisons;
+    TextView textViewMorrisons;
     Button buttonBuy;
 
     ShoppingCartSubProductAdapter shoppingCartSubProductAdapter;
@@ -63,7 +73,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         ShoppingCartResponse shoppingCartResponse = response.body();
 
                         recyclerViewSubProducts = findViewById(R.id.recyclerViewShoppingCartSubProducts);
-                        textViewTotalAmount = findViewById(R.id.textViewShoppingCartTotalAmount);
+                        linearLayoutAmazon = findViewById(R.id.linearLayoutShoppingCartAmazonTotalAmount);
+                        imageViewAmazon = findViewById(R.id.imageViewShoppingCartAmazonTotalAmount);
+                        textViewAmazon = findViewById(R.id.textViewShoppingCartAmazonTotalAmount);
+                        linearLayoutMorrisons = findViewById(R.id.linearLayoutShoppingCartMorrisonsTotalAmount);
+                        imageViewMorrisons = findViewById(R.id.imageViewShoppingCartMorrisonsTotalAmount);
+                        textViewMorrisons = findViewById(R.id.textViewShoppingCartMorrisonsTotalAmount);
                         buttonBuy = findViewById(R.id.buttonShoppingCartBuy);
 
                         recyclerViewSubProducts.setLayoutManager(new LinearLayoutManager(ShoppingCartActivity.this));
@@ -73,7 +88,33 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         shoppingCartSubProductAdapter.setData(shoppingCartResponse);
                         recyclerViewSubProducts.setAdapter(shoppingCartSubProductAdapter);
 
-                        textViewTotalAmount.setText(textViewTotalAmount.getText().toString() + shoppingCartResponse.getFixTotalAmount() + "£");
+                        double amazonTotalAmount = 0.0;
+                        double morrisonsTotalAmount = 0.0;
+                        for (ShoppingCartItemResponse shoppingCartItemResponse : shoppingCartResponse.getShoppingCartItemDTOs()) {
+                            if (shoppingCartItemResponse.getSubProductDTO().getSource().equals("AMAZON")) {
+                                amazonTotalAmount += (shoppingCartItemResponse.getSubProductDTO().getPrice() * shoppingCartItemResponse.getQuantity());
+                            } else if (shoppingCartItemResponse.getSubProductDTO().getSource().equals("MORRISONS")) {
+                                morrisonsTotalAmount += (shoppingCartItemResponse.getSubProductDTO().getPrice() * shoppingCartItemResponse.getQuantity());
+                            }
+                        }
+
+                        DecimalFormat df = new DecimalFormat("#.##");
+                        if (amazonTotalAmount != 0.0) {
+                            textViewAmazon.setText(textViewAmazon.getText().toString() + df.format(amazonTotalAmount) + "£");
+                            Picasso.get().load("https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5d825aa26de3150009a4616c%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D416%26cropY1%3D0%26cropY2%3D416").into(imageViewAmazon);
+
+                        } else {
+                            linearLayoutAmazon.setVisibility(View.INVISIBLE);
+                        }
+
+                        if (morrisonsTotalAmount != 0.0) {
+                            textViewMorrisons.setText(textViewMorrisons.getText().toString() + df.format(morrisonsTotalAmount) + "£");
+                            Picasso.get().load("https://pbs.twimg.com/profile_images/1278233172153634817/7ziRUygO_400x400.png").into(imageViewMorrisons);
+
+                        } else {
+                            linearLayoutMorrisons.setVisibility(View.INVISIBLE);
+                        }
+
 
                         buttonBuy.setOnClickListener(new View.OnClickListener() {
                             @Override
